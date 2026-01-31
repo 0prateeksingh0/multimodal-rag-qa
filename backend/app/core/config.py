@@ -8,6 +8,11 @@ class Settings(BaseSettings):
     OPENAI_API_KEY: Optional[str] = None
     UPLOAD_DIR: str = "uploads"
     
+    # Cloudinary Settings
+    CLOUDINARY_CLOUD_NAME: Optional[str] = None
+    CLOUDINARY_API_KEY: Optional[str] = None
+    CLOUDINARY_API_SECRET: Optional[str] = None
+    
     class Config:
         env_file = ".env"
 

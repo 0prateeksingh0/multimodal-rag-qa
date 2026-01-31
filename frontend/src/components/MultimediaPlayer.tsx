@@ -11,12 +11,17 @@ interface Topic {
 interface MultimediaPlayerProps {
     fileId: string;
     fileType: string;
+    filePath: string;
     topics: Topic[];
 }
 
-export const MultimediaPlayer: React.FC<MultimediaPlayerProps> = ({ fileId, fileType, topics }) => {
+export const MultimediaPlayer: React.FC<MultimediaPlayerProps> = ({ fileType, filePath, topics }) => {
+
     const mediaRef = useRef<HTMLVideoElement | HTMLAudioElement>(null);
-    const mediaUrl = `http://localhost:8000/uploads/${fileId}.${fileType}`;
+    const mediaUrl = filePath.startsWith('http')
+        ? filePath
+        : `http://localhost:8000/${filePath}`;
+
 
     const seekTo = (time: number) => {
         if (mediaRef.current) {

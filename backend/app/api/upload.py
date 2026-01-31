@@ -8,6 +8,7 @@ from app.models.database import FileMetadata, Session, create_engine
 from app.services.processor_service import processor_service
 from app.services.llm_service import llm_service
 from app.services.vector_service import vector_service
+from app.services.storage_service import storage_service
 
 router = APIRouter()
 engine = create_engine(settings.DATABASE_URL)
@@ -59,12 +60,22 @@ async def upload_file(file: UploadFile = File(...)):
     # Generate summary
     summary = await llm_service.get_summary(text_content[:4000]) # Limit for summary
     
+    # Upload to Cloudinary if configured
+    final_file_path = file_path
+    if settings.CLOUDINARY_CLOUD_NAME:
+        try:
+            cloudinary_url = storage_service.upload_file(file_path, file_id)
+            if cloudinary_url:
+                final_file_path = cloudinary_url
+        except Exception as e:
+            print(f"Cloudinary upload failed: {e}")
+
     # Save to database
     with Session(engine) as session:
         file_meta = FileMetadata(
             file_id=file_id,
             filename=file.filename,
-            file_path=file_path,
+            file_path=final_file_path,
             file_type=file_ext[1:],
             summary=summary,
             transcription=transcription

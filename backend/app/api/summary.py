@@ -19,8 +19,10 @@ async def get_file_summary(file_id: str):
         "file_id": file_id,
         "filename": file_meta.filename,
         "summary": file_meta.summary,
-        "file_type": file_meta.file_type
+        "file_type": file_meta.file_type,
+        "file_path": file_meta.file_path
     }
+
 
 @router.get("/files/{file_id}/topics")
 async def get_file_topics(file_id: str):

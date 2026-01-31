@@ -32,12 +32,26 @@ This guide explains how to deploy the AuraMind AI application to production usin
 6.  Build Command: `pip install -r requirements.txt`.
 7.  Start Command: `uvicorn main:app --host 0.0.0.0 --port $PORT`.
 
-### Persistent Storage (CRITICAL for File Uploads)
-Since Render has an ephemeral disk, your uploaded files will be deleted on restart unless you add a Disk.
-1.  Go to **Advanced** > **Disks**.
-2.  Name: `uploads`.
-3.  Mount Path: `/app/uploads`.
-4.  Size: `1GB` (Free tier limit).
+### Persistent Storage (Optional but Recommended)
+> [!IMPORTANT]
+> Render's **Free Tier** does not support persistent disks. Files in `/app/uploads` will be deleted whenever the service restarts (which happens on every deploy). To keep files permanently, you need a paid plan (Starter or higher).
+> 
+#### How to add a Disk (Paid Plans Only):
+1.  Open your **Web Service** (`auramind-backend`) in the Render Dashboard.
+2.  In the left-hand sidebar menu, click on **Disks**.
+3.  Click **Add Disk**.
+4.  Name: `uploads`.
+5.  Mount Path: `/app/uploads`.
+6.  Size: `1GB`.
+
+#### Recommended: Cloudinary (Free Persistent Storage)
+Instead of a paid Render Disk, you can use Cloudinary. It's free and permanent.
+1. Sign up at [Cloudinary.com](https://cloudinary.com/).
+2. Copy your **Cloud Name**, **API Key**, and **API Secret** from the dashboard.
+3. Add them to your Render environment variables (see below).
+
+#### Alternative for Free Tier:
+If you want to stay on the Free tier, any files uploaded will be temporary. For permanent storage without paying, consider integrating **Cloudinary** (for multimedia) or **AWS S3** later.
 
 ### Environment Variables
 Go to the **Environment** tab and add:
@@ -45,6 +59,9 @@ Go to the **Environment** tab and add:
 - `REDIS_URL`: (Your Internal Redis URL)
 - `OPENAI_API_KEY`: (Your OpenAI Key)
 - `UPLOAD_DIR`: `uploads`
+- `CLOUDINARY_CLOUD_NAME`: (Your Cloudinary Cloud Name)
+- `CLOUDINARY_API_KEY`: (Your Cloudinary API Key)
+- `CLOUDINARY_API_SECRET`: (Your Cloudinary API Secret)
 
 ---
 

@@ -84,8 +84,14 @@ export const Dashboard: React.FC<DashboardProps> = ({ fileId, onBack }) => {
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ delay: 0.2 }}
                     >
-                        <MultimediaPlayer fileId={fileId} fileType={data?.file_type} topics={topics} />
+                        <MultimediaPlayer
+                            fileId={fileId}
+                            fileType={data?.file_type}
+                            filePath={data?.file_path}
+                            topics={topics}
+                        />
                     </motion.div>
+
                 </div>
 
                 <motion.div
