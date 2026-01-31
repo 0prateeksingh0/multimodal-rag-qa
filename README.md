@@ -53,4 +53,9 @@ cd backend
 pytest --cov=app tests/
 ```
 Target coverage: 95%+
+
+## Deployment
+For instructions on how to deploy this application to Vercel and Render, please see the [Deployment Guide](DEPLOYMENT.md).
+
 # multimodal-rag-qa
+
