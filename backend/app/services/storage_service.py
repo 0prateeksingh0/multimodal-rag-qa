@@ -15,7 +15,9 @@ class StorageService:
         response = cloudinary.uploader.upload(
             file_path,
             public_id=public_id,
-            resource_type="auto" # Handles PDF, Audio, and Video
+            resource_type="auto",
+            type="upload",        # Ensure it's a public upload
+            access_mode="public"  # Explicitly set to public
         )
         return response.get("secure_url")
 
