@@ -12,7 +12,9 @@ from fastapi.staticfiles import StaticFiles
 app = FastAPI(title="Multimedia Q&A API")
 
 # Mount uploads directory
-app.mount("/uploads", StaticFiles(directory="uploads"), name="uploads")
+import os
+os.makedirs(settings.UPLOAD_DIR, exist_ok=True)
+app.mount("/uploads", StaticFiles(directory=settings.UPLOAD_DIR), name="uploads")
 
 # Database initialization
 engine = create_engine(settings.DATABASE_URL)

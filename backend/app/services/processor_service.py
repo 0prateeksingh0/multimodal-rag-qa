@@ -1,7 +1,6 @@
 import os
 from pypdf import PdfReader
 from app.core.config import settings
-import whisper_timestamped as whisper
 
 class ProcessorService:
     @staticmethod
@@ -17,6 +16,7 @@ class ProcessorService:
 
     @staticmethod
     def transcribe_multimedia(file_path: str) -> dict:
+        import whisper_timestamped as whisper
         # This will use whisper-timestamped for transcription and timestamps
         if not os.path.exists(file_path):
             return {}

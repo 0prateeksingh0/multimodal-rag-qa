@@ -1,6 +1,5 @@
 import os
 os.environ["KMP_DUPLICATE_LIB_OK"] = "TRUE"
-import faiss
 
 import numpy as np
 from openai import OpenAI
@@ -28,6 +27,7 @@ class VectorService:
         return np.array(response.data[0].embedding).astype('float32')
 
     async def index_file(self, file_id: str, text: str):
+        import faiss
         # Split text into chunks
         chunks = [text[i:i+1000] for i in range(0, len(text), 800)]
         if not chunks:
@@ -44,6 +44,7 @@ class VectorService:
         self.indices[file_id] = (index, chunks)
 
     async def search(self, file_id: str, query: str, top_k: int = 3) -> str:
+        import faiss
         if file_id not in self.indices:
             return ""
         
