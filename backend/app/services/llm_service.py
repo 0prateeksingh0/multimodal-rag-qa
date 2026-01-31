@@ -3,10 +3,17 @@ from app.core.config import settings
 
 class LLMService:
     def __init__(self):
-        self.client = OpenAI(api_key=settings.OPENAI_API_KEY)
+        self.api_key = settings.OPENAI_API_KEY
+        self.client = None
+        if self.api_key:
+            self.client = OpenAI(api_key=self.api_key)
 
     async def get_summary(self, text: str) -> str:
+        if not self.client:
+            return "Summary unavailable: OpenAI API key not configured."
+        
         response = self.client.chat.completions.create(
+
             model="gpt-4o",
             messages=[
                 {"role": "system", "content": "Summarize the text in 15 words or less."},
@@ -17,6 +24,9 @@ class LLMService:
         return response.choices[0].message.content
 
     async def answer_question(self, context: str, question: str, history: list = []) -> str:
+        if not self.client:
+            return "Answer unavailable: OpenAI API key not configured."
+            
         messages = [
             {"role": "system", "content": "You are a helpful assistant. Use the provided context to answer the question. If the answer is not in the context, say you don't know."}
         ]
