@@ -32,9 +32,37 @@ export const MultimediaPlayer: React.FC<MultimediaPlayerProps> = ({ fileType, fi
 
     return (
         <div className="space-y-6">
-            <div className="glass rounded-3xl overflow-hidden aspect-video bg-black flex items-center justify-center">
+            <div className="glass rounded-3xl overflow-hidden aspect-video bg-black flex flex-col items-center justify-center">
                 {fileType === 'pdf' ? (
-                    <iframe src={mediaUrl} className="w-full h-full border-none" title="PDF Preview" />
+                    <div className="w-full h-full flex flex-col">
+                        <object
+                            data={mediaUrl}
+                            type="application/pdf"
+                            className="w-full h-full border-none"
+                        >
+                            <div className="flex flex-col items-center justify-center h-full p-10 text-center">
+                                <p className="text-slate-400 mb-4">PDF viewer could not be embedded.</p>
+                                <a
+                                    href={mediaUrl}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="px-6 py-2 bg-primary text-white rounded-xl hover:bg-primary-dark transition-colors"
+                                >
+                                    View Full PDF
+                                </a>
+                            </div>
+                        </object>
+                        <div className="py-2 px-4 bg-white/5 border-t border-white/5 flex justify-end">
+                            <a
+                                href={mediaUrl}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="text-xs text-primary hover:underline flex items-center gap-1"
+                            >
+                                Open in New Tab
+                            </a>
+                        </div>
+                    </div>
                 ) : fileType === 'mp4' || fileType === 'mov' || fileType === 'mkv' ? (
                     <video ref={mediaRef as any} src={mediaUrl} controls className="w-full h-full" />
                 ) : (
@@ -43,6 +71,7 @@ export const MultimediaPlayer: React.FC<MultimediaPlayerProps> = ({ fileType, fi
                     </div>
                 )}
             </div>
+
 
             {topics.length > 0 && (
                 <div className="glass p-6 rounded-3xl">
