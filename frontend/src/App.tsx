@@ -25,12 +25,8 @@ function App() {
           </span>
         </div>
         <div className="hidden md:flex items-center gap-8 text-sm font-medium text-slate-400">
-          <a href="#" className="hover:text-white transition-colors">Documentation</a>
-          <a href="#" className="hover:text-white transition-colors">API Keys</a>
-          <button className="px-5 py-2 bg-white/5 hover:bg-white/10 border border-white/10 rounded-lg transition-all">
-            Settings
-          </button>
         </div>
+
       </header>
 
       <main className="relative z-10">

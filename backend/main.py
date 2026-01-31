@@ -23,10 +23,12 @@ SQLModel.metadata.create_all(engine)
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
-    allow_credentials=True,
+    allow_credentials=False,
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+
 
 app.include_router(upload_router, prefix="/api", tags=["upload"])
 app.include_router(chat_router, prefix="/api", tags=["chat"])

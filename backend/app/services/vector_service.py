@@ -1,4 +1,7 @@
+import os
+os.environ["KMP_DUPLICATE_LIB_OK"] = "TRUE"
 import faiss
+
 import numpy as np
 from openai import OpenAI
 from app.core.config import settings
