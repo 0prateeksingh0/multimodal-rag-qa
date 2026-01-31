@@ -1,5 +1,5 @@
 import React, { useCallback, useState } from 'react';
-import { Upload, File, CheckCircle, Loader2 } from 'lucide-react';
+import { Upload, CheckCircle, Loader2 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { uploadFile } from '../api/client';
 
