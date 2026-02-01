@@ -20,11 +20,16 @@ class VectorService:
             # Fallback for headless tests: return zero vector
             return np.zeros(self.dimension).astype('float32')
         
-        response = self.client.embeddings.create(
-            input=text,
-            model="text-embedding-3-small"
-        )
-        return np.array(response.data[0].embedding).astype('float32')
+        try:
+            response = self.client.embeddings.create(
+                input=text,
+                model="text-embedding-3-small"
+            )
+            return np.array(response.data[0].embedding).astype('float32')
+        except Exception as e:
+            print(f"Error generating embedding: {e}")
+            # Fallback for API errors: return zero vector
+            return np.zeros(self.dimension).astype('float32')
 
     async def index_file(self, file_id: str, text: str):
         import faiss
